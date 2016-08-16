@@ -17,6 +17,6 @@ public class EarthRotation : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
-	    thisTransform.Rotate(degreesToRotate * Vector3.right * Time.deltaTime, Space.World);
+	    thisTransform.Rotate(degreesToRotate * Vector3.up * Time.deltaTime, Space.World);
     }
 }

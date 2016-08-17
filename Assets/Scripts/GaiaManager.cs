@@ -3,7 +3,8 @@ using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
-public class GaiaManager : MonoBehaviour {
+public class GaiaManager : MonoBehaviour
+{
 
     public enum Solutions { EARTHQUAKE, VOLCANO, TSUNAMI, FLOOD, HURRICANE, TORNADO, DROUGHT, FAMINE, HEATWAVE, BLIZZARD, WILDFIRE, NOTHING };
     public enum Problems { WASTE, FOSSIL, GREENHOUSE };
@@ -27,20 +28,21 @@ public class GaiaManager : MonoBehaviour {
 
     public double DeathRate;
 
-    bool Sound = true;
+    bool soundOn = true;
 
     public Sprite sound;
     public Sprite mute;
     public Button soundButton;
 
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         TimePassed = Time.time;
         UpdateTime = Time.time;
         Temperature = 16.0f;
         WaterLevel = 7.0f;
         DeathRate = 2.0f;
-    for (int i = 0; i < 3; ++i)
+        for (int i = 0; i < 3; ++i)
         {
             Africa[i] = Solutions.NOTHING;
             Asia[i] = Solutions.NOTHING;
@@ -49,10 +51,11 @@ public class GaiaManager : MonoBehaviour {
             NorthAmerica[i] = Solutions.NOTHING;
             SouthAmerica[i] = Solutions.NOTHING;
         }
-}
-	
-	// Update is called once per frame
-	void Update () {
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
         if (Time.time - TimePassed > 15.0f)
         {
             TimePassed = Time.time;
@@ -74,7 +77,7 @@ public class GaiaManager : MonoBehaviour {
             FossilFuels += DeathRate / 160;
             GreenhouseGas += DeathRate / 150;
 
-            Temperature = 16 + (Waste / 10 + FossilFuels / 10 + GreenhouseGas / 10) ;
+            Temperature = 16 + (Waste / 10 + FossilFuels / 10 + GreenhouseGas / 10);
 
             WaterLevel += (Temperature - 16) / 500;
         }
@@ -83,7 +86,7 @@ public class GaiaManager : MonoBehaviour {
         {
             //Lose the game
         }
-	}
+    }
 
     public void UpdateContinent(string Continent, Solutions Solution, Problems Problem)
     {
@@ -104,26 +107,29 @@ public class GaiaManager : MonoBehaviour {
         {
             case Problems.WASTE:
                 Waste -= (int)PowerMultiplier;
-                if (Waste < 0){
+                if (Waste < 0)
+                {
                     Waste = 0;
                 }
                 break;
             case Problems.FOSSIL:
                 FossilFuels -= (int)PowerMultiplier;
-                if (FossilFuels < 0){
+                if (FossilFuels < 0)
+                {
                     FossilFuels = 0;
                 }
                 break;
             case Problems.GREENHOUSE:
                 GreenhouseGas -= (int)PowerMultiplier;
-                if (Waste < 0){
+                if (Waste < 0)
+                {
                     GreenhouseGas = 0;
                 }
                 break;
             default:
-                break;            
+                break;
         }
-}
+    }
 
     List<Solutions> GetContinent(string Continent)
     {
@@ -145,26 +151,24 @@ public class GaiaManager : MonoBehaviour {
                 return Africa;
         }
     }
-}
 
-public void ToggleSound()
-{
-    if (Sound)
+    public void ToggleSound()
     {
-        soundButton.GetComponent<Image>().sprite = mute;
-        Sound = false;
+        if (soundOn)
+        {
+            soundButton.GetComponent<Image>().sprite = mute;
+            soundOn = false;
+        }
+        else if (!soundOn)
+        {
+            soundButton.GetComponent<Image>().sprite = sound;
+            soundOn = true;
+        }
+
     }
-    else if (!Sound)
+
+    public void QuitToMenu()
     {
-        soundButton.GetComponent<Image>().sprite = sound;
-        Sound = true;
+        Application.LoadLevel("MenuScene");
     }
-
 }
-
-public void QuitToMenu()
-{
-    Application.LoadLevel("MenuScene");
-}
-
-

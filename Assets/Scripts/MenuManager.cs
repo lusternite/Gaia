@@ -25,4 +25,9 @@ public class MenuManager : MonoBehaviour
         Application.LoadLevel("GameScene");
     }
 
+    public void ReturnToMenu()
+    {
+        Application.LoadLevel("MenuScene");
+    }
+
 }

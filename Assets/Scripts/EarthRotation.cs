@@ -3,20 +3,28 @@ using System.Collections;
 
 public class EarthRotation : MonoBehaviour
 {
-    public GameObject sphere;
-    public float degreesToRotate;
+    // models
+    public GameObject[] model;
 
-    Transform thisTransform;
+    public float degreesToRotate;
+    GameObject currentModel;
+    int modelIndex = 0;
 
 	// Use this for initialization
 	void Start ()
     {
-        thisTransform = sphere.GetComponent<Transform>();
+        currentModel = model[modelIndex];
 	}
 	
 	// Update is called once per frame
 	void Update ()
     {
-	    thisTransform.Rotate(degreesToRotate * Vector3.up * Time.deltaTime, Space.World);
+        currentModel.GetComponent<Transform>().Rotate(degreesToRotate * Vector3.up * Time.deltaTime, Space.World);
+    }
+
+    public void ChangeModel()
+    {
+        modelIndex++;
+        currentModel = model[modelIndex];
     }
 }

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class GaiaManager : MonoBehaviour {
 
@@ -23,7 +24,10 @@ public class GaiaManager : MonoBehaviour {
     public int WaterLevel;
     public int Temperature;
 
-
+    bool Sound = true;
+    public Sprite sound;
+    public Sprite mute;
+    public Button soundButton;
 
     // Use this for initialization
     void Start () {
@@ -80,4 +84,24 @@ public class GaiaManager : MonoBehaviour {
         }
     }
 
+    public void ToggleSound()
+    {
+        if (Sound)
+        {
+            soundButton.GetComponent<Image>().sprite = mute;
+            Sound = false;
+        }
+        else if (!Sound)
+        {
+            soundButton.GetComponent<Image>().sprite = sound;
+            Sound = true;
+        }
+
+    }
+
+    public void QuitToMenu()
+    {
+        Application.LoadLevel("MenuScene");
+    }
 }
+

@@ -24,6 +24,10 @@ public class GaiaManager : MonoBehaviour {
     public int Temperature;
 
     public float DeathRate;
+    bool Sound = true;
+    public Sprite sound;
+    public Sprite mute;
+    public Button soundButton;
 
     // Use this for initialization
     void Start () {
@@ -122,5 +126,26 @@ public class GaiaManager : MonoBehaviour {
                 return Africa;
         }
     }
+    }
 
+    public void ToggleSound()
+    {
+        if (Sound)
+        {
+            soundButton.GetComponent<Image>().sprite = mute;
+            Sound = false;
+        }
+        else if (!Sound)
+        {
+            soundButton.GetComponent<Image>().sprite = sound;
+            Sound = true;
+        }
+
+    }
+
+    public void QuitToMenu()
+    {
+        Application.LoadLevel("MenuScene");
+    }
 }
+

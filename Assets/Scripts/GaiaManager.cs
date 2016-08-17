@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -8,6 +9,7 @@ public class GaiaManager : MonoBehaviour {
     public enum Problems { WASTE, FOSSIL, GREENHOUSE };
 
     public double TimePassed;
+    public double UpdateTime;
 
     public List<Solutions> Africa;
     public List<Solutions> Asia;
@@ -16,15 +18,17 @@ public class GaiaManager : MonoBehaviour {
     public List<Solutions> NorthAmerica;
     public List<Solutions> SouthAmerica;
 
-    public int Waste;
-    public int FossilFuels;
-    public int GreenhouseGas;
+    public double Waste;
+    public double FossilFuels;
+    public double GreenhouseGas;
 
-    public float WaterLevel;
-    public int Temperature;
+    public double WaterLevel;
+    public double Temperature;
 
-    public float DeathRate;
+    public double DeathRate;
+
     bool Sound = true;
+
     public Sprite sound;
     public Sprite mute;
     public Button soundButton;
@@ -32,8 +36,10 @@ public class GaiaManager : MonoBehaviour {
     // Use this for initialization
     void Start () {
         TimePassed = Time.time;
+        UpdateTime = Time.time;
+        Temperature = 16.0f;
         WaterLevel = 7.0f;
-        DeathRate = 10.0f;
+        DeathRate = 2.0f;
     for (int i = 0; i < 3; ++i)
         {
             Africa[i] = Solutions.NOTHING;
@@ -50,16 +56,29 @@ public class GaiaManager : MonoBehaviour {
         if (Time.time - TimePassed > 15.0f)
         {
             TimePassed = Time.time;
+            DeathRate = Mathf.Pow((float)DeathRate, 1.05f);
+        }
+        if (Time.time - UpdateTime > 0.25f)
+        {
+            //UpdateTime = Time.time;
+            //Waste += DeathRate / 140;
+            //FossilFuels += DeathRate / 160;
+            //GreenhouseGas += DeathRate / 150;
 
-            DeathRate = Mathf.Pow(DeathRate, 1.05f);
+            //Temperature += (Waste + FossilFuels + GreenhouseGas) / 1750;
+
+            //WaterLevel +=  (Temperature - 16) / 500;
+
+            UpdateTime = Time.time;
+            Waste += DeathRate / 140;
+            FossilFuels += DeathRate / 160;
+            GreenhouseGas += DeathRate / 150;
+
+            Temperature = 16 + (Waste / 10 + FossilFuels / 10 + GreenhouseGas / 10) ;
+
+            WaterLevel += (Temperature - 16) / 500;
         }
 
-        Waste += (int)DeathRate / 10;
-        FossilFuels += (int)DeathRate / 4;
-        GreenhouseGas += (int)DeathRate / 6;
-
-        WaterLevel = (Waste * 0.00004f) + (FossilFuels * 0.000005f) + (GreenhouseGas * 0.000015f);
-        
         if (WaterLevel >= 70.0f)
         {
             //Lose the game
@@ -126,26 +145,26 @@ public class GaiaManager : MonoBehaviour {
                 return Africa;
         }
     }
-    }
-
-    public void ToggleSound()
-    {
-        if (Sound)
-        {
-            soundButton.GetComponent<Image>().sprite = mute;
-            Sound = false;
-        }
-        else if (!Sound)
-        {
-            soundButton.GetComponent<Image>().sprite = sound;
-            Sound = true;
-        }
-
-    }
-
-    public void QuitToMenu()
-    {
-        Application.LoadLevel("MenuScene");
-    }
 }
+
+public void ToggleSound()
+{
+    if (Sound)
+    {
+        soundButton.GetComponent<Image>().sprite = mute;
+        Sound = false;
+    }
+    else if (!Sound)
+    {
+        soundButton.GetComponent<Image>().sprite = sound;
+        Sound = true;
+    }
+
+}
+
+public void QuitToMenu()
+{
+    Application.LoadLevel("MenuScene");
+}
+
 

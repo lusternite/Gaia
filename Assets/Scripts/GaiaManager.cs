@@ -44,12 +44,12 @@ public class GaiaManager : MonoBehaviour
         DeathRate = 2.0f;
         for (int i = 0; i < 3; ++i)
         {
-            Africa[i] = Solutions.NOTHING;
-            Asia[i] = Solutions.NOTHING;
-            Australia[i] = Solutions.NOTHING;
-            Europe[i] = Solutions.NOTHING;
-            NorthAmerica[i] = Solutions.NOTHING;
-            SouthAmerica[i] = Solutions.NOTHING;
+            Africa.Add(Solutions.NOTHING);
+            Asia.Add(Solutions.NOTHING);
+            Australia.Add(Solutions.NOTHING);
+            Europe.Add(Solutions.NOTHING);
+            NorthAmerica.Add(Solutions.NOTHING);
+            SouthAmerica.Add(Solutions.NOTHING);
         }
     }
 

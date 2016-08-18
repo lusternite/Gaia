@@ -3,7 +3,7 @@ using System.Collections;
 
 public class SolutionButton : MonoBehaviour {
 
-    public string SolutionType;
+    public GaiaManager.Solutions SolutionType;
 
 	// Use this for initialization
 	void Start () {
@@ -17,63 +17,12 @@ public class SolutionButton : MonoBehaviour {
 
     public void ChooseSolution()
     {
-        switch (SolutionType)
+        GameObject eventPopup = GameObject.FindGameObjectWithTag("EventPopup");
+        if (eventPopup != null)
         {
-            case "EARTHQUAKE":
-                {
-
-                    break;
-                }
-            case "VOLCANO":
-                {
-
-                    break;
-                }
-            case "TSUNAMI":
-                {
-
-                    break;
-                }
-            case "FLOOD":
-                {
-
-                    break;
-                }
-            case "HURRICANE":
-                {
-
-                    break;
-                }
-            case "TORNADO":
-                {
-
-                    break;
-                }
-            case "DROUGHT":
-                {
-
-                    break;
-                }
-            case "FAMINE":
-                {
-
-                    break;
-                }
-            case "HEATWAVE":
-                {
-
-                    break;
-                }
-            case "BLIZZARD": //....entertainment
-                {
-
-                    break;
-                }
-            case "WILDFIRE":
-                {
-
-                    break;
-                }
+            FindObjectOfType<GaiaManager>().UpdateContinent(eventPopup.GetComponent<EventPopupBehaviour>().Continent, SolutionType, eventPopup.GetComponent<EventPopupBehaviour>().Problem);
+            Time.timeScale = 1.0f;
+            Destroy(eventPopup);
         }
     }
 }

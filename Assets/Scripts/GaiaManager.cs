@@ -28,6 +28,8 @@ public class GaiaManager : MonoBehaviour
 
     public double DeathRate;
 
+    public double TickRate;
+
     bool soundOn = true;
 
     public Sprite sound;
@@ -39,9 +41,16 @@ public class GaiaManager : MonoBehaviour
     {
         TimePassed = Time.time;
         UpdateTime = Time.time;
-        Temperature = 16.0f;
-        WaterLevel = 7.0f;
-        DeathRate = 2.0f;
+
+        if (Temperature == 0)        
+            Temperature = 16.0f;     
+        if (WaterLevel == 0)        
+            WaterLevel = 7.0f;
+        if (DeathRate == 0)
+            DeathRate = 2.0f;
+        if (TickRate == 0)
+            TickRate = 0.25f;
+
         for (int i = 0; i < 3; ++i)
         {
             Africa.Add(Solutions.NOTHING);
@@ -59,27 +68,23 @@ public class GaiaManager : MonoBehaviour
         if (Time.time - TimePassed > 15.0f)
         {
             TimePassed = Time.time;
-            DeathRate = Mathf.Pow((float)DeathRate, 1.05f);
+            //Raise passive increase rate
+            DeathRate = Mathf.Pow((float)DeathRate, 1.095f);
         }
-        if (Time.time - UpdateTime > 0.25f)
+        if (Time.time - UpdateTime > TickRate)
         {
-            //UpdateTime = Time.time;
-            //Waste += DeathRate / 140;
-            //FossilFuels += DeathRate / 160;
-            //GreenhouseGas += DeathRate / 150;
-
-            //Temperature += (Waste + FossilFuels + GreenhouseGas) / 1750;
-
-            //WaterLevel +=  (Temperature - 16) / 500;
-
             UpdateTime = Time.time;
-            Waste += DeathRate / 140;
-            FossilFuels += DeathRate / 160;
-            GreenhouseGas += DeathRate / 150;
 
-            Temperature = 16 + (Waste / 10 + FossilFuels / 10 + GreenhouseGas / 10);
+            //Add passive values
+            Waste += DeathRate / (35 / TickRate);
+            FossilFuels += DeathRate / (35 / TickRate);
+            GreenhouseGas += DeathRate / (35 / TickRate);
 
-            WaterLevel += (Temperature - 16) / 500;
+            //Fix Temperature
+            Temperature = 16 + ((Waste + FossilFuels + GreenhouseGas) / 30);
+
+            //Raise water level
+            WaterLevel += Mathf.Pow(2, ((float)Temperature - 16)) / (60 / TickRate);
         }
 
         if (WaterLevel >= 70.0f)
@@ -90,45 +95,89 @@ public class GaiaManager : MonoBehaviour
 
     public void UpdateContinent(string Continent, Solutions Solution, Problems Problem)
     {
+        //Add natural disaster to the list of previous disasters in the specific continent
         GetContinent(Continent).Add(Solution);
+
+        //Cap continents memory to 3 disasters
         if (GetContinent(Continent).Count > 3)
         {
             GetContinent(Continent).RemoveAt(0);
         }
-        float PowerMultiplier = 50.0f;
+        float PowerMultiplier = 10.0f;
+
+        //Reduce reduction power with diminishing returns
         for (int i = 0; i < GetContinent(Continent).Count; i++)
         {
             if (GetContinent(Continent)[i] == Solution)
             {
-                PowerMultiplier *= 0.6f; //?
+                PowerMultiplier *= 0.5f; //?
             }
         }
         switch (Problem)
         {
             case Problems.WASTE:
-                Waste -= (int)PowerMultiplier;
-                if (Waste < 0)
+                //Positive solutions
+                if (Solution == Solutions.BLIZZARD)
                 {
-                    Waste = 0;
+                    Waste -= (int)PowerMultiplier * 2;
                 }
+                //Negative solutions
+                else if (Solution == Solutions.EARTHQUAKE)
+                {
+                    Waste -= (int)PowerMultiplier * 0.5;
+                }
+                //Neutral solutions
+                else
+                {
+                    Waste -= (int)PowerMultiplier;
+                }
+                Debug.Log("subtracting waste");
                 break;
             case Problems.FOSSIL:
-                FossilFuels -= (int)PowerMultiplier;
-                if (FossilFuels < 0)
+                if (Solution == Solutions.BLIZZARD)
                 {
-                    FossilFuels = 0;
+                    Waste -= (int)PowerMultiplier * 2;
                 }
+                //Negative solutions
+                else if (Solution == Solutions.EARTHQUAKE)
+                {
+                    Waste -= (int)PowerMultiplier * 0.5;
+                }
+                //Neutral solutions
+                else
+                {
+                    Waste -= (int)PowerMultiplier;
+                }
+                Debug.Log("subtracting deforestation");
                 break;
             case Problems.GREENHOUSE:
-                GreenhouseGas -= (int)PowerMultiplier;
-                if (Waste < 0)
+                if (Solution == Solutions.BLIZZARD)
                 {
-                    GreenhouseGas = 0;
+                    Waste -= (int)PowerMultiplier * 2;
                 }
+                //Negative solutions
+                else if (Solution == Solutions.EARTHQUAKE)
+                {
+                    Waste -= (int)PowerMultiplier * 0.5;
+                }
+                //Neutral solutions
+                else
+                {
+                    Waste -= (int)PowerMultiplier;
+                }
+                Debug.Log("subtracting gas");
                 break;
             default:
                 break;
         }
+
+        //Clean up
+        if (GreenhouseGas < 0)        
+            GreenhouseGas = 0;        
+        if (Waste < 0)        
+            Waste = 0;        
+        if (FossilFuels < 0)        
+            FossilFuels = 0;        
     }
 
     List<Solutions> GetContinent(string Continent)

@@ -66,6 +66,6 @@ public class EventScrollerBehaviour : MonoBehaviour {
 
     float GenerateRandomClimateDamage()
     {
-        return ((float)FindObjectOfType<GaiaManager>().DeathRate * Random.Range(1.0f, 10.0f));
+        return ((float)FindObjectOfType<GaiaManager>().DeathRate * Random.Range(1.0f, 2.0f));
     }
 }

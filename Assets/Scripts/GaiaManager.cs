@@ -54,7 +54,7 @@ public class GaiaManager : MonoBehaviour
         if (TickRate == 0)
             TickRate = 0.25f;
         if (PositiveReaction == 0)
-            PositiveReaction = 1.5f;
+            PositiveReaction = 2.0f;
         if (NegativeReaction == 0)
             NegativeReaction = 0.75f;
         if (Reaction == 0)
@@ -112,7 +112,7 @@ public class GaiaManager : MonoBehaviour
         {
             GetContinent(Continent).RemoveAt(0);
         }
-        double Multiplier = Reaction;
+        double Multiplier = (DeathRate * 4);
 
         //Reduce reduction power with diminishing returns
         for (int i = 0; i < GetContinent(Continent).Count; i++)

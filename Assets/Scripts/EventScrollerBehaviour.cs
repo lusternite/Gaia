@@ -41,7 +41,7 @@ public class EventScrollerBehaviour : MonoBehaviour {
 
     GaiaManager.Problems GenerateRandomProblem()
     {
-        float randomProblem = Random.Range(0, 3);
+        float randomProblem = Random.Range(0.0f, 10.0f);
         if (randomProblem <= 1.0f)
             return GaiaManager.Problems.LOGGING;
         else if (randomProblem <= 2.0f)

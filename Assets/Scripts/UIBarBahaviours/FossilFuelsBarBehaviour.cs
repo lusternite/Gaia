@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class FossilFuelsBarBehaviour : MonoBehaviour {
+public class DeforestationBarBehaviour : MonoBehaviour {
 
     GaiaManager gaiaManager;
 
@@ -14,6 +14,6 @@ public class FossilFuelsBarBehaviour : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 100.0f * (float)gaiaManager.FossilFuels / 30.0f);
+        GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 100.0f * (float)gaiaManager.Deforestation / 30.0f);
     }
 }

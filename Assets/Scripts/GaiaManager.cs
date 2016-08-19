@@ -6,8 +6,8 @@ using System.Collections.Generic;
 public class GaiaManager : MonoBehaviour
 {
 
-    public enum Solutions { EARTHQUAKE, VOLCANO, TSUNAMI, FLOOD, HURRICANE, TORNADO, DROUGHT, FAMINE, HEATWAVE, BLIZZARD, WILDFIRE, NOTHING };
-    public enum Problems { WASTE, FOSSIL, GREENHOUSE };
+    public enum Solutions { EARTHQUAKE, VOLCANO, TSUNAMI, FLOOD, TORNADO, BLIZZARD, NOTHING };
+    public enum Problems { LOGGING, LAND_DEV, FOREST_BURN, FOSSIL_FUEL, FACTORY, TRANSPORT, AGRICULTURE, LANDFILL, COMBUSTION, HAZARD };
 
     public double TimePassed;
     public double UpdateTime;
@@ -20,15 +20,18 @@ public class GaiaManager : MonoBehaviour
     public List<Solutions> SouthAmerica;
 
     public double Waste;
-    public double FossilFuels;
+    public double Deforestation;
     public double GreenhouseGas;
 
     public double WaterLevel;
     public double Temperature;
 
     public double DeathRate;
-
     public double TickRate;
+
+    public double PositiveReaction;
+    public double NegativeReaction;
+    public double Reaction;
 
     bool soundOn = true;
 
@@ -50,6 +53,12 @@ public class GaiaManager : MonoBehaviour
             DeathRate = 2.0f;
         if (TickRate == 0)
             TickRate = 0.25f;
+        if (PositiveReaction == 0)
+            PositiveReaction = 1.5f;
+        if (NegativeReaction == 0)
+            NegativeReaction = 0.75f;
+        if (Reaction == 0)
+            Reaction = 5.0f;
 
         for (int i = 0; i < 3; ++i)
         {
@@ -77,11 +86,11 @@ public class GaiaManager : MonoBehaviour
 
             //Add passive values
             Waste += DeathRate / (35 / TickRate);
-            FossilFuels += DeathRate / (35 / TickRate);
+            Deforestation += DeathRate / (35 / TickRate);
             GreenhouseGas += DeathRate / (35 / TickRate);
 
             //Fix Temperature
-            Temperature = 16 + ((Waste + FossilFuels + GreenhouseGas) / 30);
+            Temperature = 16 + ((Waste + Deforestation + GreenhouseGas) / 30);
 
             //Raise water level
             WaterLevel += Mathf.Pow(2, ((float)Temperature - 16)) / (60 / TickRate);
@@ -103,69 +112,127 @@ public class GaiaManager : MonoBehaviour
         {
             GetContinent(Continent).RemoveAt(0);
         }
-        float PowerMultiplier = 10.0f;
+        double Multiplier = Reaction;
 
         //Reduce reduction power with diminishing returns
         for (int i = 0; i < GetContinent(Continent).Count; i++)
         {
             if (GetContinent(Continent)[i] == Solution)
             {
-                PowerMultiplier *= 0.5f; //?
+                Multiplier *= 0.5f; //?
             }
         }
         switch (Problem)
         {
-            case Problems.WASTE:
+            case Problems.LOGGING:
                 //Positive solutions
-                if (Solution == Solutions.BLIZZARD)
-                {
-                    Waste -= (int)PowerMultiplier * 2;
-                }
+                if (Solution == Solutions.TORNADO || Solution == Solutions.BLIZZARD)
+                    Deforestation -= (int)Multiplier * PositiveReaction;
                 //Negative solutions
                 else if (Solution == Solutions.EARTHQUAKE)
-                {
-                    Waste -= (int)PowerMultiplier * 0.5;
-                }
+                    Deforestation -= (int)Multiplier * NegativeReaction;
                 //Neutral solutions
                 else
-                {
-                    Waste -= (int)PowerMultiplier;
-                }
-                Debug.Log("subtracting waste");
+                    Deforestation -= (int)Multiplier;
                 break;
-            case Problems.FOSSIL:
-                if (Solution == Solutions.BLIZZARD)
-                {
-                    Waste -= (int)PowerMultiplier * 2;
-                }
+            case Problems.LAND_DEV:
+                //Positive solutions
+                if (Solution == Solutions.EARTHQUAKE || Solution == Solutions.VOLCANO)
+                    Deforestation -= (int)Multiplier * PositiveReaction;
                 //Negative solutions
-                else if (Solution == Solutions.EARTHQUAKE)
-                {
-                    Waste -= (int)PowerMultiplier * 0.5;
-                }
+                else if (Solution == Solutions.TORNADO)
+                    Deforestation -= (int)Multiplier * NegativeReaction;
                 //Neutral solutions
                 else
-                {
-                    Waste -= (int)PowerMultiplier;
-                }
-                Debug.Log("subtracting deforestation");
+                    Deforestation -= (int)Multiplier;
                 break;
-            case Problems.GREENHOUSE:
-                if (Solution == Solutions.BLIZZARD)
-                {
-                    Waste -= (int)PowerMultiplier * 2;
-                }
+            case Problems.FOREST_BURN:
+                //Positive solutions
+                if (Solution == Solutions.BLIZZARD || Solution == Solutions.FLOOD || Solution == Solutions.TSUNAMI)
+                    Deforestation -= (int)Multiplier * PositiveReaction;
                 //Negative solutions
-                else if (Solution == Solutions.EARTHQUAKE)
-                {
-                    Waste -= (int)PowerMultiplier * 0.5;
-                }
+                else if (Solution == Solutions.VOLCANO)
+                    Deforestation -= (int)Multiplier * NegativeReaction;
                 //Neutral solutions
                 else
-                {
-                    Waste -= (int)PowerMultiplier;
-                }
-                Debug.Log("subtracting gas");
+                    Deforestation -= (int)Multiplier;
+                break;
+            case Problems.FOSSIL_FUEL:
+                //Positive solutions
+                if (Solution == Solutions.EARTHQUAKE || Solution == Solutions.TSUNAMI)
+                    GreenhouseGas -= (int)Multiplier * PositiveReaction;
+                //Negative solutions
+                else if (Solution == Solutions.VOLCANO)
+                    GreenhouseGas -= (int)Multiplier * NegativeReaction;
+                //Neutral solutions
+                else
+                    GreenhouseGas -= (int)Multiplier;
+                break;
+            case Problems.FACTORY:
+                //Positive solutions
+                if (Solution == Solutions.EARTHQUAKE || Solution == Solutions.FLOOD)
+                    GreenhouseGas -= (int)Multiplier * PositiveReaction;
+                //Negative solutions
+                else if (Solution == Solutions.VOLCANO)
+                    GreenhouseGas -= (int)Multiplier * NegativeReaction;
+                //Neutral solutions
+                else
+                    GreenhouseGas -= (int)Multiplier;
+                break;
+            case Problems.TRANSPORT:
+                //Positive solutions
+                if (Solution == Solutions.TSUNAMI || Solution == Solutions.TORNADO || Solution == Solutions.FLOOD)
+                    GreenhouseGas -= (int)Multiplier * PositiveReaction;
+                //Negative solutions
+                else if (Solution == Solutions.BLIZZARD)
+                    GreenhouseGas -= (int)Multiplier * NegativeReaction;
+                //Neutral solutions
+                else
+                    GreenhouseGas -= (int)Multiplier;
+                break;
+            case Problems.AGRICULTURE:
+                //Positive solutions
+                if (Solution == Solutions.BLIZZARD || Solution == Solutions.FLOOD)
+                    GreenhouseGas -= (int)Multiplier * PositiveReaction;
+                //Negative solutions
+                else if (Solution == Solutions.TORNADO)
+                    GreenhouseGas -= (int)Multiplier * NegativeReaction;
+                //Neutral solutions
+                else
+                    GreenhouseGas -= (int)Multiplier;
+                break;
+            case Problems.LANDFILL:
+                //Positive solutions
+                if (Solution == Solutions.VOLCANO)
+                    Waste -= (int)Multiplier * PositiveReaction;
+                //Negative solutions
+                else if (Solution == Solutions.EARTHQUAKE || Solution == Solutions.TSUNAMI)
+                    Waste -= (int)Multiplier * NegativeReaction;
+                //Neutral solutions
+                else
+                    Waste -= (int)Multiplier;
+                break;
+            case Problems.COMBUSTION:
+                //Positive solutions
+                if (Solution == Solutions.BLIZZARD || (Solution == Solutions.TORNADO))
+                    Waste -= (int)Multiplier * PositiveReaction;
+                //Negative solutions
+                else if (Solution == Solutions.VOLCANO)
+                    Waste -= (int)Multiplier * NegativeReaction;
+                //Neutral solutions
+                else
+                    Waste -= (int)Multiplier;
+                break;
+            case Problems.HAZARD:
+                //Positive solutions
+                if (Solution == Solutions.VOLCANO || Solution == Solutions.EARTHQUAKE)
+                    Waste -= (int)Multiplier * PositiveReaction;
+                //Negative solutions
+                else if (Solution == Solutions.FLOOD || Solution == Solutions.TSUNAMI)
+                    Waste -= (int)Multiplier * NegativeReaction;
+                //Neutral solutions
+                else
+                    Waste -= (int)Multiplier;
                 break;
             default:
                 break;
@@ -176,8 +243,8 @@ public class GaiaManager : MonoBehaviour
             GreenhouseGas = 0;        
         if (Waste < 0)        
             Waste = 0;        
-        if (FossilFuels < 0)        
-            FossilFuels = 0;        
+        if (Deforestation < 0)        
+            Deforestation = 0;        
     }
 
     List<Solutions> GetContinent(string Continent)

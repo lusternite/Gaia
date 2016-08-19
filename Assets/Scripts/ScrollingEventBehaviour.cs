@@ -45,17 +45,52 @@ public class ScrollingEventBehaviour : MonoBehaviour {
         GaiaManager gaiaManager = FindObjectOfType<GaiaManager>();
         switch (Problem)
         {
-            case GaiaManager.Problems.FOSSIL:
+            case GaiaManager.Problems.LOGGING:
                 {
-                    gaiaManager.FossilFuels += ClimateDamage;
+                    gaiaManager.Deforestation += ClimateDamage;
                     break;
                 }
-            case GaiaManager.Problems.GREENHOUSE:
+            case GaiaManager.Problems.LAND_DEV:
+                {
+                    gaiaManager.Deforestation += ClimateDamage;
+                    break;
+                }
+            case GaiaManager.Problems.FOREST_BURN:
+                {
+                    gaiaManager.Deforestation += ClimateDamage;
+                    break;
+                }
+            case GaiaManager.Problems.FOSSIL_FUEL:
                 {
                     gaiaManager.GreenhouseGas += ClimateDamage;
                     break;
                 }
-            case GaiaManager.Problems.WASTE:
+            case GaiaManager.Problems.FACTORY:
+                {
+                    gaiaManager.GreenhouseGas += ClimateDamage;
+                    break;
+                }
+            case GaiaManager.Problems.TRANSPORT:
+                {
+                    gaiaManager.GreenhouseGas += ClimateDamage;
+                    break;
+                }
+            case GaiaManager.Problems.AGRICULTURE:
+                {
+                    gaiaManager.GreenhouseGas += ClimateDamage;
+                    break;
+                }
+            case GaiaManager.Problems.LANDFILL:
+                {
+                    gaiaManager.Waste += ClimateDamage;
+                    break;
+                }
+            case GaiaManager.Problems.COMBUSTION:
+                {
+                    gaiaManager.Waste += ClimateDamage;
+                    break;
+                }
+            case GaiaManager.Problems.HAZARD:
                 {
                     gaiaManager.Waste += ClimateDamage;
                     break;

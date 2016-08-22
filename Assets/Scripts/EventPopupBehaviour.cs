@@ -130,7 +130,7 @@ public class EventPopupBehaviour : MonoBehaviour {
                 }
             case GaiaManager.Problems.HAZARD:
                 {
-                    strProblem = "Too much hazardous waste is being produces in";
+                    strProblem = "Too much hazardous waste is being produces in ";
                     break;
                 }
             default:

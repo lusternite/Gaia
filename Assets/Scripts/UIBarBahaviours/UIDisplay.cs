@@ -4,7 +4,7 @@ using System.Collections;
 
 public class UIDisplay : MonoBehaviour {
 
-    public enum UIType { WASTE, GAS, DEFORESTATION, WATER, TEMP };
+    public enum UIType { WASTE, GAS, DEFORESTATION, WATER, TEMP, YEAR };
     public UIType UiElement;
     public Text UiPercent;
 
@@ -34,6 +34,9 @@ public class UIDisplay : MonoBehaviour {
             case UIType.TEMP:
                 UiPercent.text = "Water level = " + WaterLevel() + " m";
                 break;
+            case UIType.YEAR:
+                UiPercent.text = "Year  " + Year();
+                break;
         }
 	}
 
@@ -60,5 +63,11 @@ public class UIDisplay : MonoBehaviour {
     string WaterLevel()
     {
         return (Mathf.Floor((float)gaiaManager.WaterLevel).ToString());
+    }
+
+    string Year()
+    {
+        float year = 2000 + Mathf.Floor((float)gaiaManager.TimePassed) / 15;
+        return (year.ToString());
     }
 }

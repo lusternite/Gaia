@@ -77,8 +77,12 @@ public class GaiaManager : MonoBehaviour
         if (Time.time - TimePassed > 15.0f)
         {
             TimePassed = Time.time;
-            //Raise passive increase rate
-            DeathRate = Mathf.Pow((float)DeathRate, 1.095f);
+            //Cap the death rate so it doesnt get out of hand
+            if (DeathRate < 15.0f)
+            {
+                //Raise passive increase rate
+                DeathRate = Mathf.Pow((float)DeathRate, 1.095f);
+            }      
         }
         if (Time.time - UpdateTime > TickRate)
         {
@@ -112,7 +116,7 @@ public class GaiaManager : MonoBehaviour
         {
             GetContinent(Continent).RemoveAt(0);
         }
-        double Multiplier = (DeathRate * 4);
+        double Multiplier = 2.5 + (DeathRate / 1.5);
 
         //Reduce reduction power with diminishing returns
         for (int i = 0; i < GetContinent(Continent).Count; i++)

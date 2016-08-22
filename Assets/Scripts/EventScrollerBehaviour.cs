@@ -35,6 +35,7 @@ public class EventScrollerBehaviour : MonoBehaviour {
             if (SpawnTimer <= 0.0f)
             {
                 SpawnTimer = 0.0f;
+                SpawnRate = 5.0f - ((float)FindObjectOfType<GaiaManager>().DeathRate / 15.0f) * 3.0f;
             }
         }
     }

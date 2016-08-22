@@ -33,7 +33,7 @@ public class ScrollingEventBehaviour : MonoBehaviour {
             eventPopup.GetComponent<EventPopupBehaviour>().Problem = Problem;
             eventPopup.GetComponent<EventPopupBehaviour>().ClimateDamage = ClimateDamage;
             eventPopup.transform.SetParent(GameObject.Find("Canvas").transform);
-            eventPopup.GetComponent<RectTransform>().anchoredPosition = new Vector2(100.0f, 0.0f);
+            eventPopup.GetComponent<RectTransform>().anchoredPosition = new Vector2(0.0f, 0.0f);
             Time.timeScale = TimeSlowFactor;
             gameObject.SetActive(false);
         }

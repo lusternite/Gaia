@@ -121,10 +121,41 @@ public class GaiaManager : MonoBehaviour
         //Reduce reduction power with diminishing returns
         for (int i = 0; i < GetContinent(Continent).Count; i++)
         {
+            int _iCount = 0;
             if (GetContinent(Continent)[i] == Solution)
             {
-                Multiplier *= 0.5f; //?
+                _iCount += 1;
+                Multiplier *= 0.6f; //?
             }
+            if (_iCount == 3)
+            {
+                //Function(Solution, Continent); //Instantiate an information popup.
+                //string theText;
+                //switch (Solution)
+                //{
+                //    case Solutions.TORNADO:
+                //        theText = "With so many Tornados recently occuring in " + Continent + " the government has been increasing awareness and structural integrity of weak buildings.";
+                //        break;
+                //    case Solutions.VOLCANO:
+                //        theText = "With so much Volcanic activity happening in " + Continent + " early alarm systems have been implemented, and precautions are being taken.";
+                //        break;
+                //    case Solutions.EARTHQUAKE:
+                //        theText = "With the amount Earthquakes being experienced by " + Continent + " structural integrity of buildings is being reinforced as a precaution.";
+                //        break;
+                //    case Solutions.BLIZZARD:
+                //        theText = "With the amount of blizzards happening in " + Continent + " citizens are taking extra care around the continent.";
+                //        break;
+                //    case Solutions.TSUNAMI:
+                //        theText = "With the frequency of tsunami's growing in " + Continent + " wave breakers are being used to lessen their impact";
+                //        break;
+                //    case Solutions.FLOOD:
+                //        theText = "With all the recent Floods in " + Continent + " there has been a heavy increase in flood prevention measures.";
+                //        break;
+                //    default:
+                //        break;
+                //}
+            }
+            //Call popup function
         }
         switch (Problem)
         {

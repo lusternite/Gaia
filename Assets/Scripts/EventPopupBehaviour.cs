@@ -85,52 +85,52 @@ public class EventPopupBehaviour : MonoBehaviour {
         {
             case GaiaManager.Problems.LOGGING:
                 {
-                    strProblem = "There is a large increase in logging in ";
+                    strProblem = "A large increase in logging in ";
                     break;
                 }
             case GaiaManager.Problems.LAND_DEV:
                 {
-                    strProblem = "Major Land development is taking place in ";
+                    strProblem = "Major land development taking place in ";
                     break;
                 }
             case GaiaManager.Problems.FOREST_BURN:
                 {
-                    strProblem = "Forests are being burned in ";
+                    strProblem = "Large areas of forest being burned in ";
                     break;
                 }
             case GaiaManager.Problems.FOSSIL_FUEL:
                 {
-                    strProblem = "The burning of fossil fuels is getting out of hand in ";
+                    strProblem = "Fossil fuel burning is getting out of hand in ";
                     break;
                 }
             case GaiaManager.Problems.FACTORY:
                 {
-                    strProblem = "There is a Huge increase in factories around ";
+                    strProblem = "Huge increases in factory emissions in ";
                     break;
                 }
             case GaiaManager.Problems.TRANSPORT:
                 {
-                    strProblem = "Greenhouse gas emissions are through the roof from transportation in ";
+                    strProblem = "Carbon emissions from transportation are through the roof in ";
                     break;
                 }
             case GaiaManager.Problems.AGRICULTURE:
                 {
-                    strProblem = "There are huge agricultural advancements in ";
+                    strProblem = "Agricultural emissions being produced in ";
                     break;
                 }
             case GaiaManager.Problems.LANDFILL:
                 {
-                    strProblem = "Exessive landfilling is taking place in ";
+                    strProblem = "Exessive landfilling taking place in ";
                     break;
                 }
             case GaiaManager.Problems.COMBUSTION:
                 {
-                    strProblem = "Rediculous amounts of waste is being combusted ";
+                    strProblem = "Large amounts of waste combustion ";
                     break;
                 }
             case GaiaManager.Problems.HAZARD:
                 {
-                    strProblem = "Too much hazardous waste is being produces in ";
+                    strProblem = "Too much hazardous waste being produced in ";
                     break;
                 }
             default:

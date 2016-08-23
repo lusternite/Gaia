@@ -20,22 +20,22 @@ public class UIDisplay : MonoBehaviour {
 	    switch (UiElement)
         {
             case UIType.WASTE:
-                UiPercent.text = "Waste = " + Waste() + "%";
+                UiPercent.text = Waste() + "%";
                 break;
             case UIType.GAS:
-                UiPercent.text = "Greenhouse Gasses = " + Gas() + "%";
+                UiPercent.text = Gas() + "%";
                 break;
             case UIType.DEFORESTATION:
-                UiPercent.text = "Deforestation = " + Deforestation() + "%";
+                UiPercent.text = Deforestation() + "%";
                 break;
             case UIType.WATER:
-                UiPercent.text = "Temperature = " + Temperature() + " C";
+                UiPercent.text = Temperature() + " C";
                 break;
             case UIType.TEMP:
-                UiPercent.text = "Water level = " + WaterLevel() + " m";
+                UiPercent.text = WaterLevel() + " m";
                 break;
             case UIType.YEAR:
-                UiPercent.text = "Year  " + Year();
+                UiPercent.text = Year();
                 break;
         }
 	}

@@ -19,6 +19,8 @@ public class GaiaManager : MonoBehaviour
     public List<Solutions> NorthAmerica;
     public List<Solutions> SouthAmerica;
 
+    public int Year;
+
     public double Waste;
     public double Deforestation;
     public double GreenhouseGas;
@@ -51,6 +53,7 @@ public class GaiaManager : MonoBehaviour
     {
         TimePassed = Time.time;
         UpdateTime = Time.time;
+        Year = 2000;
 
         if (Temperature == 0)        
             Temperature = 16.0f;     
@@ -76,7 +79,6 @@ public class GaiaManager : MonoBehaviour
             NorthAmerica.Add(Solutions.NOTHING);
             SouthAmerica.Add(Solutions.NOTHING);
         }
-
         previous = "";
 
         BackgroundMusic = GetComponent<AudioSource>();
@@ -87,6 +89,7 @@ public class GaiaManager : MonoBehaviour
     {
         if (Time.time - TimePassed > 15.0f)
         {
+            Year += 1;
             TimePassed = Time.time;
             UpdateMusic();
             //Cap the death rate so it doesnt get out of hand

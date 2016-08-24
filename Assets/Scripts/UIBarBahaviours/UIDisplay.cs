@@ -67,7 +67,6 @@ public class UIDisplay : MonoBehaviour {
 
     string Year()
     {
-        float year = (int)(2000 + Mathf.Floor((float)gaiaManager.TimePassed) / 15);
-        return (year.ToString());
+        return (gaiaManager.Year.ToString());
     }
 }

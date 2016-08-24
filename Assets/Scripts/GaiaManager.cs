@@ -40,6 +40,7 @@ public class GaiaManager : MonoBehaviour
     public Sprite sound;
     public Sprite mute;
     public Button soundButton;
+    public GameObject DiminishingReturnsPrefab;
 
     public string previous;
 
@@ -61,9 +62,9 @@ public class GaiaManager : MonoBehaviour
         UpdateTime = Time.time;
         Year = 2000;
 
-        if (Temperature == 0)        
-            Temperature = 16.0f;     
-        if (WaterLevel == 0)        
+        if (Temperature == 0)
+            Temperature = 16.0f;
+        if (WaterLevel == 0)
             WaterLevel = 7.0f;
         if (DeathRate == 0)
             DeathRate = 2.0f;
@@ -103,7 +104,7 @@ public class GaiaManager : MonoBehaviour
             {
                 //Raise passive increase rate
                 DeathRate = Mathf.Pow((float)DeathRate, 1.095f);
-            }      
+            }
         }
         if (Time.time - UpdateTime > TickRate)
         {
@@ -141,43 +142,50 @@ public class GaiaManager : MonoBehaviour
             GetContinent(Continent).RemoveAt(0);
         }
         double Multiplier = 2.5 + (DeathRate / 1.5);
+        int _iCount = 0;
 
         //Reduce reduction power with diminishing returns
         for (int i = 0; i < GetContinent(Continent).Count; i++)
         {
-            int _iCount = 0;
             if (GetContinent(Continent)[i] == Solution)
             {
                 _iCount += 1;
                 Multiplier *= 0.6f; //?
             }
-            if (_iCount == 3)
+            Debug.Log("Current count is = " + _iCount);
+            if (_iCount >= 2)
             {
-                //Function(Solution, Continent); //Instantiate an information popup.
-                //string theText;
-                //switch (Solution)
-                //{
-                //    case Solutions.TORNADO:
-                //        theText = "With so many Tornados recently occuring in " + Continent + " the government has been increasing awareness and structural integrity of weak buildings.";
-                //        break;
-                //    case Solutions.VOLCANO:
-                //        theText = "With so much Volcanic activity happening in " + Continent + " early alarm systems have been implemented, and precautions are being taken.";
-                //        break;
-                //    case Solutions.EARTHQUAKE:
-                //        theText = "With the amount Earthquakes being experienced by " + Continent + " structural integrity of buildings is being reinforced as a precaution.";
-                //        break;
-                //    case Solutions.BLIZZARD:
-                //        theText = "With the amount of blizzards happening in " + Continent + " citizens are taking extra care around the continent.";
-                //        break;
-                //    case Solutions.TSUNAMI:
-                //        theText = "With the frequency of tsunami's growing in " + Continent + " wave breakers are being used to lessen their impact";
-                //        break;
-                //    case Solutions.FLOOD:
-                //        theText = "With all the recent Floods in " + Continent + " there has been a heavy increase in flood prevention measures.";
-                //        break;
-                //    default:
-                //        break;
-                //}
+                GameObject DRCheck = GameObject.FindGameObjectWithTag("DiminishingReturnsPopup");
+                if (DRCheck)
+                {
+                    Destroy(DRCheck);
+                }
+                GameObject DRPopup = Instantiate(DiminishingReturnsPrefab); //Instantiate an information popup.
+                DRPopup.transform.SetParent(GameObject.Find("Canvas").transform);
+                DRPopup.GetComponent<RectTransform>().anchoredPosition = new Vector2(-352.0f, -104.0f);
+                switch (Solution)
+                {
+                    case Solutions.TORNADO:
+                        DRPopup.transform.GetChild(0).GetComponent<Text>().text = "With so many Tornados recently occuring in " + ContinentStringConverter(Continent) + " the government has been increasing awareness and structural integrity of weak buildings.";
+                        break;
+                    case Solutions.VOLCANO:
+                        DRPopup.transform.GetChild(0).GetComponent<Text>().text = "With so much Volcanic activity happening in " + ContinentStringConverter(Continent) + " early alarm systems have been implemented, and precautions are being taken.";
+                        break;
+                    case Solutions.EARTHQUAKE:
+                        DRPopup.transform.GetChild(0).GetComponent<Text>().text = "With the amount Earthquakes being experienced by " + ContinentStringConverter(Continent) + " structural integrity of buildings is being reinforced as a precaution.";
+                        break;
+                    case Solutions.BLIZZARD:
+                        DRPopup.transform.GetChild(0).GetComponent<Text>().text = "With the amount of blizzards happening in " + ContinentStringConverter(Continent) + " citizens are taking extra care around the continent.";
+                        break;
+                    case Solutions.TSUNAMI:
+                        DRPopup.transform.GetChild(0).GetComponent<Text>().text = "With the frequency of tsunami's growing in " + ContinentStringConverter(Continent) + " wave breakers are being used to lessen their impact";
+                        break;
+                    case Solutions.FLOOD:
+                        DRPopup.transform.GetChild(0).GetComponent<Text>().text = "With all the recent Floods in " + ContinentStringConverter(Continent) + " there has been a heavy increase in flood prevention measures.";
+                        break;
+                    default:
+                        break;
+                }
             }
             //Call popup function
         }
@@ -298,12 +306,12 @@ public class GaiaManager : MonoBehaviour
         }
 
         //Clean up
-        if (GreenhouseGas < 0)        
-            GreenhouseGas = 0;        
-        if (Waste < 0)        
-            Waste = 0;        
-        if (Deforestation < 0)        
-            Deforestation = 0;        
+        if (GreenhouseGas < 0)
+            GreenhouseGas = 0;
+        if (Waste < 0)
+            Waste = 0;
+        if (Deforestation < 0)
+            Deforestation = 0;
     }
 
     List<Solutions> GetContinent(string Continent)
@@ -349,17 +357,17 @@ public class GaiaManager : MonoBehaviour
     void UpdateMusic()
     {
         double IntensityLevel = Waste + GreenhouseGas + Deforestation;
-        if (IntensityLevel < 60)
+        if (IntensityLevel < 60 && BackgroundMusic.clip != MoodEasy)
         {
             BackgroundMusic.clip = MoodEasy;
             BackgroundMusic.Play();
         }
-        else if (IntensityLevel >= 60 && IntensityLevel < 120)
+        else if (IntensityLevel >= 60 && IntensityLevel < 120 && BackgroundMusic.clip != MoodMedium)
         {
             BackgroundMusic.clip = MoodMedium;
             BackgroundMusic.Play();
         }
-        else if (IntensityLevel >= 120)
+        else if (IntensityLevel >= 120 && BackgroundMusic.clip != MoodHard)
         {
             BackgroundMusic.clip = MoodHard;
             BackgroundMusic.Play();
@@ -370,5 +378,26 @@ public class GaiaManager : MonoBehaviour
     {
         Application.LoadLevel("MenuScene");
         FindObjectOfType<GameManager>().ChangeBGM("MenuScene");
+    }
+
+    string ContinentStringConverter(string continent)
+    {
+        switch (continent)
+        {
+            case "AFRICA":
+                return "Africa";
+            case "EUROPE":
+                return "Europe";
+            case "ASIA":
+                return "Asia";
+            case "NORTHAMERICA":
+                return "North America";
+            case "SOUTHAMERICA":
+                return "South America";
+            case "AUSTRALIA":
+                return "Oceania";
+            default:
+                return "Conversion Error";
+        }
     }
 }

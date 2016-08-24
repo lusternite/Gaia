@@ -32,4 +32,9 @@ public class MenuManager : MonoBehaviour
         FindObjectOfType<GameManager>().ChangeBGM("MenuScene");
     }
 
+    public void LinkOne()
+    {
+        Application.OpenURL("http://www.earthday.org/campaigns/climate-change/");
+    }
+
 }

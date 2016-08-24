@@ -51,6 +51,7 @@ public class GaiaManager : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+
         TimePassed = Time.time;
         UpdateTime = Time.time;
         Year = 2000;
@@ -118,6 +119,7 @@ public class GaiaManager : MonoBehaviour
         if (WaterLevel >= 70.0f)
         {
             //Lose the game
+            GameObject.Find("GameManger").GetComponent<GameManager>().Setyear(Year);
             Application.LoadLevel("PostGameScene");
             FindObjectOfType<GameManager>().ChangeBGM("PostGameScene");
         }

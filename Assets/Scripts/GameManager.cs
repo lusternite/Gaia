@@ -9,6 +9,8 @@ public class GameManager : MonoBehaviour
     public AudioClip MainTheme;
     public AudioClip EndTheme;
 
+    public int years;
+
     void Start()
     {
         //ReadFromFile();
@@ -63,5 +65,15 @@ public class GameManager : MonoBehaviour
                 }
         }
         BackGroundMusic.Play();
+    }
+
+    public void Setyear(int y)
+    {
+        years = y;
+    }
+
+    public int Getyear()
+    {
+        return years;
     }
 }

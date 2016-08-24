@@ -1,13 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class MenuManager : MonoBehaviour
 {
+    public Text years;
+
 	// Use this for initialization
 	void Start ()
     {
-	
-	}
+        if (years != null)
+	        years.text = "The Earth survived for: " + GameObject.Find("GameManger").GetComponent<GameManager>().Getyear().ToString() + " Years";
+    }
 	
 	// Update is called once per frame
 	void Update ()

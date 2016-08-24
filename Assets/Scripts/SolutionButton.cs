@@ -4,8 +4,14 @@ using System.Collections.Generic;
 
 public class SolutionButton : MonoBehaviour
 {
-
     public GaiaManager.Solutions SolutionType;
+
+    public AudioSource earthquake;
+    public AudioSource volcano;
+    public AudioSource tsunami;
+    public AudioSource flood;
+    public AudioSource blizzard;
+    public AudioSource tornado;
 
     // Use this for initialization
     void Start()
@@ -75,21 +81,28 @@ public class SolutionButton : MonoBehaviour
             {
                 case GaiaManager.Solutions.BLIZZARD:
                     b = "Blizzard ";
+                    blizzard.Play();
                     break;
                 case GaiaManager.Solutions.VOLCANO:
                     b = "Volcano ";
+                    volcano.Play();
+                    Debug.Log("volcano sound should have played");
                     break;
                 case GaiaManager.Solutions.FLOOD:
                     b = "Flood ";
+                    flood.Play();
                     break;
                 case GaiaManager.Solutions.TSUNAMI:
                     b = "Tsunami ";
+                    tsunami.Play();
                     break;
                 case GaiaManager.Solutions.EARTHQUAKE:
                     b = "Earthquake ";
+                    earthquake.Play();
                     break;
                 case GaiaManager.Solutions.TORNADO:
                     b = "Tornado ";
+                    tornado.Play();
                     break;
 
             }

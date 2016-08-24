@@ -30,4 +30,9 @@ public class MenuManager : MonoBehaviour
         Application.LoadLevel("MenuScene");
     }
 
+    public void LinkOne()
+    {
+        Application.OpenURL("http://www.earthday.org/campaigns/climate-change/");
+    }
+
 }

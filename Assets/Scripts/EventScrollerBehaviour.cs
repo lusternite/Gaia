@@ -26,7 +26,14 @@ public class EventScrollerBehaviour : MonoBehaviour {
             NewPrefab.GetComponent<ScrollingEventBehaviour>().Problem = GenerateRandomProblem();
             NewPrefab.GetComponent<ScrollingEventBehaviour>().ClimateDamage = GenerateRandomClimateDamage();
             NewPrefab.transform.SetParent(transform);
-            NewPrefab.GetComponent<RectTransform>().anchoredPosition = new Vector2(0.0f, Screen.currentResolution.height / 2 + NewPrefab.GetComponent<RectTransform>().rect.height);
+            if (Screen.fullScreen)
+            {
+                NewPrefab.GetComponent<RectTransform>().anchoredPosition = new Vector2(0.0f, Screen.height + NewPrefab.GetComponent<RectTransform>().rect.height);
+            }
+            else
+            {
+                NewPrefab.GetComponent<RectTransform>().anchoredPosition = new Vector2(0.0f, Screen.currentResolution.height + NewPrefab.GetComponent<RectTransform>().rect.height);
+            }
             SpawnTimer = SpawnRate;
         }
         else if (SpawnTimer > 0.0f)

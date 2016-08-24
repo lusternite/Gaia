@@ -39,6 +39,13 @@ public class GaiaManager : MonoBehaviour
     public Sprite mute;
     public Button soundButton;
 
+    public string previous;
+
+    public AudioSource BackgroundMusic;
+    public AudioClip MoodEasy;
+    public AudioClip MoodMedium;
+    public AudioClip MoodHard;
+
     // Use this for initialization
     void Start()
     {
@@ -69,6 +76,10 @@ public class GaiaManager : MonoBehaviour
             NorthAmerica.Add(Solutions.NOTHING);
             SouthAmerica.Add(Solutions.NOTHING);
         }
+
+        previous = "";
+
+        BackgroundMusic = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -77,6 +88,7 @@ public class GaiaManager : MonoBehaviour
         if (Time.time - TimePassed > 15.0f)
         {
             TimePassed = Time.time;
+            UpdateMusic();
             //Cap the death rate so it doesnt get out of hand
             if (DeathRate < 15.0f)
             {
@@ -103,6 +115,8 @@ public class GaiaManager : MonoBehaviour
         if (WaterLevel >= 70.0f)
         {
             //Lose the game
+            Application.LoadLevel("PostGameScene");
+            FindObjectOfType<GameManager>().ChangeBGM("PostGameScene");
         }
     }
 
@@ -309,17 +323,42 @@ public class GaiaManager : MonoBehaviour
         {
             soundButton.GetComponent<Image>().sprite = mute;
             soundOn = false;
+            BackgroundMusic.Pause();
+            FindObjectOfType<GameManager>().BackGroundMusic.Pause();
         }
         else if (!soundOn)
         {
             soundButton.GetComponent<Image>().sprite = sound;
             soundOn = true;
+            BackgroundMusic.Play();
+            FindObjectOfType<GameManager>().BackGroundMusic.Play();
         }
 
+    }
+
+    void UpdateMusic()
+    {
+        double IntensityLevel = Waste + GreenhouseGas + Deforestation;
+        if (IntensityLevel < 60)
+        {
+            BackgroundMusic.clip = MoodEasy;
+            BackgroundMusic.Play();
+        }
+        else if (IntensityLevel >= 60 && IntensityLevel < 120)
+        {
+            BackgroundMusic.clip = MoodMedium;
+            BackgroundMusic.Play();
+        }
+        else if (IntensityLevel >= 120)
+        {
+            BackgroundMusic.clip = MoodHard;
+            BackgroundMusic.Play();
+        }
     }
 
     public void QuitToMenu()
     {
         Application.LoadLevel("MenuScene");
+        FindObjectOfType<GameManager>().ChangeBGM("MenuScene");
     }
 }

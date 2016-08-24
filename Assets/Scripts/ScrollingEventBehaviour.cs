@@ -15,9 +15,15 @@ public class ScrollingEventBehaviour : MonoBehaviour {
         rectTransform = GetComponent<RectTransform>();
         CauseGaiaDamage();
 	}
-	
-	// Update is called once per frame
-	void Update () {
+
+    EarthRotation EarthRotationScript()
+    {
+        GameObject o = GameObject.Find("Earth");
+        return o.GetComponent<EarthRotation>();
+    }
+
+    // Update is called once per frame
+    void Update () {
         rectTransform.anchoredPosition = new Vector2(rectTransform.anchoredPosition.x, rectTransform.anchoredPosition.y - ScrollSpeed * Time.deltaTime);
         if (rectTransform.anchoredPosition.y <= 0.0f)
         {
@@ -34,7 +40,6 @@ public class ScrollingEventBehaviour : MonoBehaviour {
             eventPopup.GetComponent<EventPopupBehaviour>().ClimateDamage = ClimateDamage;
             eventPopup.transform.SetParent(GameObject.Find("Canvas").transform);
             eventPopup.GetComponent<RectTransform>().anchoredPosition = new Vector2(0.0f, 0.0f);
-            Time.timeScale = TimeSlowFactor;
             gameObject.SetActive(false);
         }
     }

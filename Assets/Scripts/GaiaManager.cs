@@ -48,10 +48,15 @@ public class GaiaManager : MonoBehaviour
     public AudioClip MoodMedium;
     public AudioClip MoodHard;
 
+    EarthRotation EarthRotationScript()
+    {
+        GameObject o = GameObject.Find("Earth");
+        return o.GetComponent<EarthRotation>();
+    }
+
     // Use this for initialization
     void Start()
     {
-
         TimePassed = Time.time;
         UpdateTime = Time.time;
         Year = 2000;
@@ -119,7 +124,7 @@ public class GaiaManager : MonoBehaviour
         if (WaterLevel >= 70.0f)
         {
             //Lose the game
-            GameObject.Find("GameManger").GetComponent<GameManager>().Setyear(Year);
+            GameObject.Find("GameManager").GetComponent<GameManager>().Setyear(Year);
             Application.LoadLevel("PostGameScene");
             FindObjectOfType<GameManager>().ChangeBGM("PostGameScene");
         }

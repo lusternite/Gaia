@@ -35,7 +35,7 @@ public class UIDisplay : MonoBehaviour {
                 UiPercent.text = WaterLevel() + " m";
                 break;
             case UIType.YEAR:
-                UiPercent.text = Year();
+                UiPercent.text = GameObject.Find("Main Camera").GetComponent<GaiaManager>().Year.ToString();
                 break;
         }
 	}

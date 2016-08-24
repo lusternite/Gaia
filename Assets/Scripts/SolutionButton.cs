@@ -18,13 +18,18 @@ public class SolutionButton : MonoBehaviour
 
     }
 
+    EarthRotation EarthRotationScript()
+    {
+        GameObject o = GameObject.Find("Earth");
+        return o.GetComponent<EarthRotation>();
+    }
+
     public void ChooseSolution()
     {
         GameObject eventPopup = GameObject.FindGameObjectWithTag("EventPopup");
         if (eventPopup != null)
         {
             FindObjectOfType<GaiaManager>().UpdateContinent(eventPopup.GetComponent<EventPopupBehaviour>().Continent, SolutionType, eventPopup.GetComponent<EventPopupBehaviour>().Problem);
-            Time.timeScale = 1.0f;
             Destroy(eventPopup);
 
             GameObject[] TotalCollectables = GameObject.FindGameObjectsWithTag("hazard");
@@ -88,6 +93,8 @@ public class SolutionButton : MonoBehaviour
                     break;
 
             }
+
+            EarthRotationScript().SnapBackToRotation();
 
             if (FindObjectOfType<GaiaManager>().previous != "")
             {

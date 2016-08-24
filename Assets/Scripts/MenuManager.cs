@@ -10,7 +10,7 @@ public class MenuManager : MonoBehaviour
 	void Start ()
     {
         if (years != null)
-	        years.text = "The Earth survived for: " + GameObject.Find("GameManger").GetComponent<GameManager>().Getyear().ToString() + " Years";
+	        years.text = "You survived until " + GameObject.Find("GameManager").GetComponent<GameManager>().Getyear().ToString();
     }
 	
 	// Update is called once per frame

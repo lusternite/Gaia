@@ -29,6 +29,12 @@ public class EventPopupBehaviour : MonoBehaviour {
 	
 	}
 
+    EarthRotation EarthRotationScript()
+    {
+        GameObject o = GameObject.Find("Earth");
+        return o.GetComponent<EarthRotation>();
+    }
+
     void RandomlyGenerateContinent()
     {
         //float randomContinent = Random.Range(0, 6);
@@ -75,6 +81,8 @@ public class EventPopupBehaviour : MonoBehaviour {
             Country = WasteLocations[(int)rand];
             Continent = WasteContinents[(int)rand];
         }
+
+        EarthRotationScript().SnapToContinent(Continent);
     }
 
     //A temporary function to display what continent and problem this event is
@@ -143,7 +151,7 @@ public class EventPopupBehaviour : MonoBehaviour {
 
     public void DestroySelf()
     {
-        Time.timeScale = 1.0f;
+        EarthRotationScript().SnapBackToRotation();
         Destroy(gameObject);
     }
 }

@@ -23,11 +23,13 @@ public class MenuManager : MonoBehaviour
     public void StartGame()
     {
         Application.LoadLevel("GameScene");
+        FindObjectOfType<GameManager>().ChangeBGM("GameScene");
     }
 
     public void ReturnToMenu()
     {
         Application.LoadLevel("MenuScene");
+        FindObjectOfType<GameManager>().ChangeBGM("MenuScene");
     }
 
 }

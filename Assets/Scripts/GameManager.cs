@@ -4,7 +4,10 @@ using System.Collections;
 public class GameManager : MonoBehaviour
 {
     private static GameManager instance;
-    //public AudioSource BackGroundMusic;
+    public AudioSource BackGroundMusic;
+    public AudioClip MenuTheme;
+    public AudioClip MainTheme;
+    public AudioClip EndTheme;
 
     void Start()
     {
@@ -23,6 +26,8 @@ public class GameManager : MonoBehaviour
         //BackGroundMusic.loop = true;
         //BackGroundMusic.Play();
 
+        BackGroundMusic = GetComponent<AudioSource>();
+
         DontDestroyOnLoad(this.gameObject);
     }
 
@@ -36,4 +41,27 @@ public class GameManager : MonoBehaviour
     {
 	
 	}
+
+    public void ChangeBGM(string LevelName)
+    {
+        switch (LevelName)
+        {
+            case "GameScene":
+                {
+                    BackGroundMusic.clip = MainTheme;
+                    break;
+                }
+            case "PostGameScene":
+                {
+                    BackGroundMusic.clip = EndTheme;
+                    break;
+                }
+            case "MenuScene":
+                {
+                    BackGroundMusic.clip = MenuTheme;
+                    break;
+                }
+        }
+        BackGroundMusic.Play();
+    }
 }

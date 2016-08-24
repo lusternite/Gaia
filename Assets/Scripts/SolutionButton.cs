@@ -99,11 +99,11 @@ public class SolutionButton : MonoBehaviour
 
 
 
-            GameObject same = GameObject.Find("Earth/Model1/" + b + a);
+            GameObject same = GameObject.Find("Earth/EarthModel/" + b + a);
             Debug.Log("I made" + b + a);
             same.SetActive(true);
 
-            FindObjectOfType<GaiaManager>().previous = "Earth/Model1/" + b + a;
+            FindObjectOfType<GaiaManager>().previous = "Earth/EarthModel/" + b + a;
         }
     }
 }

@@ -67,6 +67,6 @@ public class UIDisplay : MonoBehaviour {
 
     string Year()
     {
-        return (gaiaManager.Year.ToString());
+        return ("Earth - " + gaiaManager.Year.ToString());
     }
 }

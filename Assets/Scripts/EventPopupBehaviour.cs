@@ -4,10 +4,10 @@ using System.Collections;
 
 public class EventPopupBehaviour : MonoBehaviour {
 
-    string[] DeforestationLocations = { "Honduras", "Nigeria", "The Philippines", "Russia", "Ghana", "North Korea", "Brazil", "the United States of America" };
+    string[] DeforestationLocations = { "Honduras", "Nigeria", "the Philippines", "Russia", "Ghana", "North Korea", "Brazil", "the United States of America" };
     string[] DeforestationContinents = { "NORTHAMERICA", "AFRICA", "ASIA", "EUROPE", "AFRICA", "ASIA", "SOUTHAMERICA", "NORTHAMERICA" };
 
-    string[] GasLocations = { "China", "the United States of America", "European Union", "India", "Brazil", "Germany", "Australia", "the Democratic Republic of Congo" };
+    string[] GasLocations = { "China", "the United States of America", "the European Union", "India", "Brazil", "Germany", "Australia", "the Democratic Republic of Congo" };
     string[] GasContinents = { "ASIA", "NORTHAMERICA", "EUROPE", "ASIA", "SOUTHAMERICA", "EUROPE", "AUSTRALIA", "AFRICA" };
 
     string[] WasteLocations = { "Sri Lanka", "Barbados", "the Solomon Islands", "New Zealand", "St Lucia", "Switzerland", "Guyana" };
@@ -125,7 +125,7 @@ public class EventPopupBehaviour : MonoBehaviour {
                 }
             case GaiaManager.Problems.COMBUSTION:
                 {
-                    strProblem = "Large amounts of waste combustion ";
+                    strProblem = "Large amounts of waste combustion in ";
                     break;
                 }
             case GaiaManager.Problems.HAZARD:
@@ -139,5 +139,11 @@ public class EventPopupBehaviour : MonoBehaviour {
                 }
         }
         transform.GetChild(0).GetComponent<Text>().text = strProblem + Country + "!";
+    }
+
+    public void DestroySelf()
+    {
+        Time.timeScale = 1.0f;
+        Destroy(gameObject);
     }
 }

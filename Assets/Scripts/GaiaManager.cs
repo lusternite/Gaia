@@ -49,6 +49,12 @@ public class GaiaManager : MonoBehaviour
     public AudioClip MoodMedium;
     public AudioClip MoodHard;
 
+    public GameObject ex1;
+    public GameObject ex2;
+    public GameObject ex3;
+    public GameObject ex4;
+    public GameObject ex5;
+
     EarthRotation EarthRotationScript()
     {
         GameObject o = GameObject.Find("Earth");
@@ -58,6 +64,12 @@ public class GaiaManager : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        ex1.GetComponent<Image>().enabled = false;
+        ex2.GetComponent<Image>().enabled = false;
+        ex3.GetComponent<Image>().enabled = false;
+        ex4.GetComponent<Image>().enabled = false;
+        ex5.GetComponent<Image>().enabled = false;
+
         TimePassed = Time.time;
         UpdateTime = Time.time;
         Year = 2000;
@@ -112,14 +124,36 @@ public class GaiaManager : MonoBehaviour
 
             //Add passive values
             Waste += DeathRate / (35 / TickRate);
+            if (Waste > 80)
+                ex1.GetComponent<Image>().enabled = true;
+            else
+                ex1.GetComponent<Image>().enabled = false;
+
             Deforestation += DeathRate / (35 / TickRate);
+            if (Deforestation > 80)
+                ex2.GetComponent<Image>().enabled = true;
+            else
+                ex2.GetComponent<Image>().enabled = false;
+
             GreenhouseGas += DeathRate / (35 / TickRate);
+            if (GreenhouseGas > 80)
+                ex3.GetComponent<Image>().enabled = true;
+            else
+                ex4.GetComponent<Image>().enabled = false;
 
             //Fix Temperature
             Temperature = 16 + ((Waste + Deforestation + GreenhouseGas) / 30);
+            if (Temperature > 20)
+                ex5.GetComponent<Image>().enabled = true;
+            else
+                ex5.GetComponent<Image>().enabled = false;
 
             //Raise water level
             WaterLevel += Mathf.Pow(2, ((float)Temperature - 16)) / (60 / TickRate);
+            if (WaterLevel > 55)
+                ex4.GetComponent<Image>().enabled = true;
+            else
+                ex4.GetComponent<Image>().enabled = false;
         }
 
         if (WaterLevel >= 70.0f)
